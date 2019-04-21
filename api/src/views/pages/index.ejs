@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <% include ../partials/head %>
+</head>
+
+<body>
+    <div id="app">
+        <% include ../partials/header %>
+        <main role="main" class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <pre>package: <%- JSON.stringify(package, null, 2) %></pre>
+                    <pre>socket_clients: <%- JSON.stringify(socket_clients, null, 2) %></pre>
+                </div>
+            </div>
+        </main>
+    </div>
+    <% include ../partials/footer %>
+</body>
+
+</html>

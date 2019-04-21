@@ -1,0 +1,22 @@
+{
+  "name": "@projex/api",
+  "version": "0.0.0",
+  "private": true,
+  "main": "src/",
+  "scripts": {
+    "docker-dev": "cd ./.docker && bash ./start.sh",
+    "serve": "nodemon src/index.js --watch .",
+    "dev": "cross-env NODE_ENV=development HOST=0.0.0.0 PORT=8080 DEBUG=app:* nodemon src/index.js --watch .",
+    "now-build": "npm run build"
+  },
+  "dependencies": {
+    "@projex/express": "file:./@projex/express",
+    "@projex/jsonwebtoken": "file:./@projex/jsonwebtoken",
+    "@projex/socket.io": "file:./@projex/socket.io",
+    "axios": "^0.16.2",
+    "cross-env": "^5.0.1",
+    "debug": "^3.2.6",
+    "dotenv": "^6.0.0",
+    "nodemon": "^1.18.9"
+  }
+}
