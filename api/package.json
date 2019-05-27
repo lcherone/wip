@@ -1,8 +1,8 @@
 {
-  "name": "@projex/api",
+  "name": "@acme-project/api",
   "version": "0.0.0",
   "private": true,
-  "main": "src/",
+  "main": "./src/",
   "scripts": {
     "serve": "nodemon src/index.js --watch .",
     "generate-jwt-certs": "cd ./.files/jwt && bash generate.certs.sh",
