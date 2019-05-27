@@ -4,15 +4,15 @@
   "private": true,
   "main": "src/",
   "scripts": {
-    "docker-dev": "cd ./.docker && bash ./start.sh",
     "serve": "nodemon src/index.js --watch .",
-    "dev": "cross-env NODE_ENV=development HOST=0.0.0.0 PORT=8080 DEBUG=app:* nodemon src/index.js --watch .",
-    "now-build": "npm run build"
+    "generate-jwt-certs": "cd ./.files/jwt && bash generate.certs.sh",
+    "dev": "cross-env NODE_ENV=production HOST=0.0.0.0 PORT=8080 DEBUG=app:* nodemon src/index.js --watch ."
   },
   "dependencies": {
-    "@projex/express": "file:./@projex/express",
-    "@projex/jsonwebtoken": "file:./@projex/jsonwebtoken",
-    "@projex/socket.io": "file:./@projex/socket.io",
+    "@lib/express": "file:./src/lib/express",
+    "@lib/jwt": "file:./src/lib/jwt",
+    "@lib/socket.io": "file:./src/lib/socket.io",
+    "@acme-project/models": "file:./src/model",
     "axios": "^0.16.2",
     "cross-env": "^5.0.1",
     "debug": "^3.2.6",

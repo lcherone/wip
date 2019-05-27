@@ -1,24 +1,23 @@
-require('dotenv').config();
+require('dotenv').config()
 
 const debug = require('debug')('app:bootstrap')
 const path = require('path')
 
-console.log(__dirname)
-
 try {
-  // App instance
-  const app = require('@projex/express')({
+
+  // App
+  const app = require('@lib/express')({
     publicPath: path.join(__dirname, '../', '../', 'app', 'dist')
   })
 
-  // Enable socket.io
-  app.socket = require('@projex/socket.io')(app)
+  // Socket.io
+  app.socket = require('@lib/socket.io')(app)
 
   /*
    ** Enable route controllers
    */
   app.addRoutes([
-    'index'
+    'index', 'test'
   ])
 
   /*
@@ -39,8 +38,8 @@ try {
   });
 
   /*
-  ** Listen
-  */
+   ** Listen
+   */
   app.listen(process.env.PORT || 8080, err => {
     if (err) throw err
     debug(`Server started: http://${process.env.HOST || 'localhost'}:${process.env.PORT || 8080}`)

@@ -1,0 +1,80 @@
+version: '2'
+
+networks:
+  app-network:
+    ipam:
+      config:
+        - subnet: 10.1.1.0/24
+          gateway: 10.1.1.1
+
+services:
+  app:
+    build: .
+    hostname: app
+    container_name: app
+    ports:
+      - 8080:8080
+    links:
+    - db:mysql
+    # - mailhog:mailhog
+    user: ${CURRENT_UID}
+    volumes:
+      - ../:/var/www/html
+    environment:
+      WEBROOT: /var/www/html
+      NODE_ENV: production
+      DEBUG: app:*
+      DB_ROOTPASS: 123456
+      DB_HOSTNAME: db
+      DB_USERNAME: app
+      DB_PASSWORD: 654321
+      DB_DATABASE: app
+      SMTP_HOSTNAME: localhost
+      SMTP_USERNAME: localhost@localhost
+      SMTP_PASSWORD: 123456
+      SMTP_PORT: 2525
+      IS_CONTAINER: "true"
+      # set from start.sh
+      IS_RESTART: ${IS_RESTART}
+    dns: 1.1.1.1
+    networks:
+      - app-network
+
+  db:
+    image: mariadb
+    hostname: db
+    container_name: db
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+    networks:
+      - app-network
+
+  adminer:
+    image: adminer
+    hostname: adminer
+    container_name: adminer
+    ports:
+      - 8888:8080
+    networks:
+      - app-network
+
+  # ngrok:
+  #   build: ./ngrok
+  #   container_name: ngrok
+  #   ports:
+  #     - 4040:4040
+  #   links:
+  #     - app
+  #   networks:
+  #     - app-network
+
+  # mailhog:
+  #   image: mailhog/mailhog:v1.0.0
+  #   container_name: mailhog
+  #   environment:
+  #     MH_SMTP_BIND_ADDR: 0.0.0.0:2525
+  #   ports:
+  #     - 2525:2525
+  #     - 8025:8025
+  #   networks:
+  #     - app-network

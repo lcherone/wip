@@ -1,2 +1,5 @@
+.env
+api/.files/jwt/private.key
+api/.files/jwt/public.pem
 node_modules/
 package-lock.json

@@ -1,7 +1,7 @@
-const debug = require('debug')('api:model')
+const debug = require('debug')('api:models')
 
 /**
- * 
+ *
  */
 module.exports = app => {
     return {

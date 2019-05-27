@@ -1,25 +1,18 @@
 {
-  "name": "projex",
+  "name": "acme-project",
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "concurrently --kill-others \"sleep 5; cd api && npm run serve\" \"cd app && rm -rf dist && npm run build-dev\""
+    "docker-dev": "cd ./.docker && bash ./start.sh",
+    "docker-clean": "cd ./.docker && bash ./cleanup.sh",
+    "generate-jwt-certs": "cd ./api && npm run generate-jwt-certs",
+    "serve": "concurrently --kill-others \"sleep 5; cd api && npm run serve\" \"cd app && rm -rf dist && npm run build\"",
+    "dev": "concurrently --kill-others \"sleep 5; cd api && npm run serve\" \"cd app && rm -rf dist && npm run build-dev\"",
+    "lint": "cd app && npm run lint --fix"
   },
   "devDependencies": {
     "concurrently": "^4.1.0",
-    "@projex/api": "file:./api",
-    "@projex/app": "file:./app",
-    "@vue/cli-plugin-babel": "^3.6.0",
-    "@vue/cli-plugin-eslint": "^3.6.0",
-    "@vue/cli-plugin-pwa": "^3.6.0",
-    "@vue/cli-service": "^3.6.0",
-    "@vue/eslint-config-standard": "^4.0.0",
-    "babel-eslint": "^10.0.1",
-    "eslint": "^5.16.0",
-    "eslint-plugin-vue": "^5.0.0",
-    "lint-staged": "^8.1.5",
-    "node-sass": "^4.9.0",
-    "sass-loader": "^7.1.0",
-    "vue-template-compiler": "^2.5.21"
+    "@acme-project/api": "file:./api",
+    "@acme-project/app": "file:./app"
   }
 }

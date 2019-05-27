@@ -1,0 +1,12 @@
+{
+    "name": "@lib/jwt",
+    "version": "0.0.0",
+    "private": true,
+    "dependencies": {
+      "jsonwebtoken": "^8.3.0"
+    },
+    "scripts": {
+      "postinstall" : "cd ./certs && sh ./generate.certs.sh"
+    }
+  }
+  
