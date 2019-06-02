@@ -2,7 +2,7 @@
 
 A boilerplate project structure for dev which uses docker containers.
 
-Includes mysql, adminer, mailhog, ngrok, coder-server (persistant state with extra extensions) to 
+Includes mysql, adminer, mailhog, ngrok, code-server (persistant state with extra extensions) to 
 run/develop a frontend `./app` (Vue3) with a seperate express `./api`
 
 **Run:** 
