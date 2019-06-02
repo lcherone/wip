@@ -1,4 +1,4 @@
-version: '2'
+version: "2"
 
 networks:
   app-network:
@@ -8,6 +8,7 @@ networks:
           gateway: 10.1.1.1
 
 services:
+
   app:
     build: .
     hostname: app
@@ -16,7 +17,7 @@ services:
       - 8080:8080
     links:
     - db:mysql
-    # - mailhog:mailhog
+    - mailhog:mailhog
     user: ${CURRENT_UID}
     volumes:
       - ../:/var/www/html
@@ -68,13 +69,28 @@ services:
   #   networks:
   #     - app-network
 
-  # mailhog:
-  #   image: mailhog/mailhog:v1.0.0
-  #   container_name: mailhog
-  #   environment:
-  #     MH_SMTP_BIND_ADDR: 0.0.0.0:2525
-  #   ports:
-  #     - 2525:2525
-  #     - 8025:8025
-  #   networks:
-  #     - app-network
+  mailhog:
+    image: mailhog/mailhog:v1.0.0
+    container_name: mailhog
+    environment:
+      MH_SMTP_BIND_ADDR: 0.0.0.0:2525
+    ports:
+      - 2525:2525
+      - 8025:8025
+    networks:
+      - app-network
+
+  code-server:
+    build: ./code-server
+    container_name: code-server
+    ports:
+      - "8444:8444" # change port to 8444 as I use LXD, deal with it ;p
+    volumes:
+      - ../:/home/coder/project
+      - ./code-server/data:/home/coder/.local/share/code-server
+      #- ~/.vscode/extensions:/home/coder/.vscode/extensions # mount $USER's extensions
+    environment:
+      PASSWORD: 123456
+    command: --allow-http --disable-telemetry --port 8444 --extensions-dir /home/coder/.vscode/extensions
+    networks:
+      - app-network

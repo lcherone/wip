@@ -24,6 +24,9 @@ module.exports = options => {
     bodyParser: {}
   }, options)
 
+  app.set('basePath', this.options.basePath);
+  app.set('publicPath', this.options.publicPath);
+
   /**
    * Package
    */
@@ -31,6 +34,26 @@ module.exports = options => {
   app.set('package', this.package)
 
   debug('Starting: ' + this.package.name + ' [v' + this.package.version + ']')
+
+  /**
+   * Set app holders
+   */
+  app.model = {}
+
+  /**
+   * Add models
+   *
+   * {array} models
+   */
+  this.addModels = function (models = []) {
+    if (!Array.isArray(models)) throw Error('Invalid argument type, expecting array');
+
+    models.forEach(item => {
+      if (typeof item !== "string") throw Error('Invalid model, expecting string');
+
+      app.model[item] = require('@acme-project/model/' + item)(app)
+    });
+  }
 
   /**
    * Add routes
@@ -56,13 +79,38 @@ module.exports = options => {
     routes.forEach(item => {
       if (typeof item !== "string") throw Error('Invalid route, expecting string');
 
-      debug('Loading router [%s]: %s', item, path.join(routesPath, item + '.js'));
-      const route = require(path.join(routesPath, item))(app);
+      let route
 
-      // add socket
+      // its a module
+      if (this.package.dependencies['@acme-project/api-' + item]) {
+        debug('Loading API module router [%s]: %s', item, '@acme-project/api-' + item);
+        route = require('@acme-project/api-' + item)(app);
+      } else {
+        // presume its local
+        debug('Loading API local router [%s]: %s', item, path.join(routesPath, item + '.js'));
+        route = require(path.join(routesPath, item))(app);
+      }
+
+      // add controller models
+      if (route.models) {
+        app.model = Object.assign({}, app.model, route.models)
+      }
+
+      // add controller socket hooks
       if (this.socket && route.controller && route.controller.socket) {
         debug(' - adding socket');
         this.socket.socketHooks.push(route.controller.socket);
+      }
+
+      // add controller socket hooks
+      if (this.socket && route.controllers) {
+        for (let i in route.controllers) {
+          // add controller socket hooks
+          if (route.controllers[i].socket) {
+            debug(' - adding socket');
+            this.socket.socketHooks.push(route.controllers[i].socket);
+          }
+        }
       }
 
       // add route
@@ -122,6 +170,7 @@ module.exports = options => {
     express: app,
     package: this.package,
     options: this.options,
+    addModels: this.addModels,
     addRoutes: this.addRoutes,
     listen: this.listen
   }

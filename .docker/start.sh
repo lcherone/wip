@@ -5,7 +5,7 @@
 ## This script gets run when you run `$ npm run docker-dev`
 ##
 ##  - It will do a sanity check that docker is installed
-##  - It will ask to restart containers if already exsist
+##  - It will ask to restart containers if already exist
 ##  - You can force install by passing -f like: `$ npm run docker-dev -- -f`
 #
 set -eu
@@ -17,14 +17,14 @@ docker_check() {
 
     # check if docker is installed
     if [ ! -x "$(command -v docker)" ]; then
-        echo "\033[1;31mERROR: Docker not installed!\033[0m"
+        echo "\033[1;31mERROR: Docker is not installed!\033[0m"
         echo "    -: https://docs.docker.com/install"
         OK=false
     fi
 
     # check for docker-compose is installed
     if [ ! -x "$(command -v docker-compose)" ]; then
-        echo "\033[1;31mERROR: Docker Compose not installed!\033[0m"
+        echo "\033[1;31mERROR: Docker Compose is not installed!\033[0m"
         echo "    -: https://docs.docker.com/compose/install"
         OK=false
     fi

@@ -1,3 +1,7 @@
+/*
+ ** Express Router
+ */
+const router = require('express').Router()
 
 module.exports = app => {
 
@@ -24,12 +28,15 @@ module.exports = app => {
 
     /**
      * [GET] /test
-     * 
+     *
      * @param {*} req
      * @param {*} res
      * @param {*} next
      */
     async get(req, res, next) {
+
+      console.log(this.app.model)
+
       try {
         res.json({
           message: 'Hello from /test'
@@ -39,14 +46,6 @@ module.exports = app => {
       }
     }
   }(app)
-
-  /*
-   ** Router & Routes
-   */
-  const {
-    Router
-  } = require('express')
-  const router = Router()
 
   //
   router.get('/test', (...args) => controller.get(...args))

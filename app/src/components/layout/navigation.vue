@@ -1,68 +1,47 @@
 <template>
   <div class="navigation">
-    <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
-      <router-link tag="a" to="/" class="navbar-brand mr-1">API</router-link>
-
-      <!-- Navbar Search -->
-      <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
-        <div class="input-group">
-          <input
-            type="text"
-            class="form-control"
-            placeholder="Search for..."
-            aria-label="Search"
-            aria-describedby="basic-addon2"
-          >
-          <div class="input-group-append">
-            <button class="btn btn-primary" type="button">
-              <i class="fa fa-search"></i>
-            </button>
-          </div>
-        </div>
-      </form>
-
-      <!-- Navbar -->
-      <ul class="navbar-nav ml-auto ml-md-0">
-        <li class="nav-item dropdown no-arrow mx-1">
-          <a
-            class="nav-link dropdown-toggle"
-            href="#"
-            id="messagesDropdown"
-            role="button"
-            data-toggle="dropdown"
-            aria-haspopup="true"
-            aria-expanded="false"
-          >
-            <span class="badge badge-danger">7</span>
-            <i class="fa fa-envelope fa-fw"></i>
-          </a>
-          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="messagesDropdown">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Something else here</a>
-          </div>
+    <nav class="sidebar col-xs-12 col-sm-4 col-lg-3 col-xl-2">
+      <h1 class="site-title">
+        <router-link tag="a" to="/">
+          <i class="fa fa-cube"></i> Projex
+        </router-link>
+      </h1>
+      <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">
+        <em class="fa fa-bars"></em>
+      </a>
+      <ul class="nav nav-pills flex-column sidebar-nav">
+        <li class="nav-item">
+          <router-link tag="a" to="/" class="nav-link" active-class="active" exact>
+            <em class="fa fa-home"></em> Home
+          </router-link>
         </li>
-        <li class="nav-item dropdown no-arrow">
-          <a
-            class="nav-link dropdown-toggle"
-            href="#"
-            id="userDropdown"
-            role="button"
-            data-toggle="dropdown"
-            aria-haspopup="true"
-            aria-expanded="false"
-          >
-            <i class="fa fa-user-circle fa-fw"></i>
-          </a>
-          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-            <a class="dropdown-item" href="#">Settings</a>
-            <a class="dropdown-item" href="#">Activity Log</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Logout</a>
-          </div>
+        <li class="nav-item">
+          <router-link tag="a" to="/users" class="nav-link" active-class="active">
+            <em class="fa fa-users"></em> Users
+          </router-link>
         </li>
+        <!--
+        <li class="parent nav-item">
+          <a class="nav-link" data-toggle="collapse" href="#sub-item-1">
+            <em class="fa fa-file-o">&nbsp;</em> Pages
+            <span data-toggle="collapse" href="#sub-item-1" class="icon pull-right">
+              <i class="fa fa-plus"></i>
+            </span>
+          </a>
+          <ul class="children collapse" id="sub-item-1">
+            <li class="nav-item">
+              <a class="nav-link" href="login.html">Login</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="error.html">Error 404</a>
+            </li>
+          </ul>
+        </li>
+        -->
       </ul>
+      <a href="javascript:void(0)" class="logout-button" @click="signOut()">
+        <em class="fa fa-power-off"></em> Signout
+      </a>
     </nav>
   </div>
 </template>
@@ -70,7 +49,13 @@
 <script>
 export default {
   name: 'LayoutNavigation',
-  props: ['state']
+  props: ['state'],
+  methods: {
+    signOut() {
+      this.$storage.remove('state')
+      this.$router.push({ path: '/auth/sign-in' })
+    }
+  }
 }
 </script>
 

@@ -6,38 +6,24 @@
 
 <script>
 import helpers from '@/mixins/helpers'
+import user from '@/mixins/user'
+
+// const debug = require('debug')('app:index')
 
 export default {
-  mixins: [helpers],
+  mixins: [helpers, user],
   data: () => ({
     // state is the store, its a prop which is passed to all pages
     state: {
-      auth: {
-        id: 0,
-        token: '',
-        secret: ''
-      },
+      auth: {},
       meta: {}
     }
   }),
-  sockets: {
-    connect: function () {
-      this.$socket.emit('announce', {}, function (data) {
-        // eslint-disable-next-line
-        console.log('socket announced', data)
-      })
-    }
-  },
   beforeMount() {
-    // get/store state
-    // if (this.$storage.isset('state')) {
-    //  this.state = this.$storage.get('state')
-    // } else {
-    // init a new state
-    this.state.auth.secret = this.$randomString(64)
 
-    this.$storage.set('state', this.state)
-    // }
+  },
+  methods: {
+
   }
 }
 </script>

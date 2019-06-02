@@ -1,3 +1,8 @@
+/*
+ ** Express Router
+ */
+const router = require('express').Router()
+
 /**
  * Index Controller
  *
@@ -8,8 +13,8 @@
  */
 module.exports = app => {
 
-  /*
-   ** Controller
+  /**
+   * Controller
    */
   const controller = new class {
 
@@ -18,20 +23,23 @@ module.exports = app => {
     }
 
     /**
-     * Socket.io events
+     * Socket.io event(s)
      */
     async socket(socket, io, clients) {
+      //
       socket.on('page:index', (data, cb) => {
-        cb({
+        if (cb) cb({
           data: 'foobarb'
         })
       })
+
+      //
       socket.on('announce', (data, cb) => {
-        console.log('announce', clients)
+        console.log('announce', socket.id)
 
         clients[socket.id].meta = data
 
-        cb(clients)
+        if (cb) cb(clients)
       })
     }
 
@@ -54,12 +62,9 @@ module.exports = app => {
     // }
   }(app)
 
-  /*
-   ** Router & Routes
+  /**
+   * Route(s)
    */
-  const router = require('express').Router()
-
-  // GET /[options.apiPath [/options.apiVersion]]/
   // router.get('/', (...args) => controller.get(...args))
 
   return {

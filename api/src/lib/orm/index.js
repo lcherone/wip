@@ -1,5 +1,5 @@
 const debug = require('debug')('app:lib:orm')
-const mysql = require('mysql')
+const mysql = require('mysql2')
 
 /**
  *
@@ -810,6 +810,10 @@ module.exports = function (options, activePool) {
       if (activePool) {
         pool = activePool
       } else {
+        let _options = options
+        delete _options.freeze
+        delete _options.underscore
+
         pool = mysql.createPool(options)
       }
 
@@ -853,8 +857,4 @@ module.exports = function (options, activePool) {
       return Promise.resolve()
     })
   }
-}
-
-module.exports = app => {
-  return {}
 }

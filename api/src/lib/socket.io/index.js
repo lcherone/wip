@@ -51,7 +51,7 @@ class Server {
     })
 
     this.io.on('connection', async (socket) => {
-      debug('Client connected: ' + socket.id, socket.handshake)
+      debug('Client connected: ' + socket.id/*, socket.handshake*/)
       try {
         //let client = {};
         // check websocket mode (guest or authenticated)

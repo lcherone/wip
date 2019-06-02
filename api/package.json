@@ -6,13 +6,19 @@
   "scripts": {
     "serve": "nodemon src/index.js --watch .",
     "generate-jwt-certs": "cd ./.files/jwt && bash generate.certs.sh",
+    "export-database": "cd ./.files/sql && bash export-database.sh",
+    "import-database": "cd ./.files/sql && bash import.database.sh",
     "dev": "cross-env NODE_ENV=production HOST=0.0.0.0 PORT=8080 DEBUG=app:* nodemon src/index.js --watch ."
   },
   "dependencies": {
     "@lib/express": "file:./src/lib/express",
     "@lib/jwt": "file:./src/lib/jwt",
+    "@lib/encryption": "file:./src/lib/encryption",
+    "@lib/orm": "file:./src/lib/orm",
     "@lib/socket.io": "file:./src/lib/socket.io",
-    "@acme-project/models": "file:./src/model",
+    "@acme-project/model": "file:./src/model",
+    "@acme-project/api-auth": "file:./src/routes/auth",
+    "@acme-project/api-user": "file:./src/routes/user",
     "axios": "^0.16.2",
     "cross-env": "^5.0.1",
     "debug": "^3.2.6",

@@ -87,9 +87,9 @@ setup_database() {
         mysql -h mysql -u"root" -p"$DB_ROOTPASS" -e "FLUSH PRIVILEGES;"
 
         # import database if exsits
-        if [ -f $WEBROOT/.files/sql/seed.sql ]; then
+        if [ -f $WEBROOT/api/.files/sql/seed.sql ]; then
             echo >&2 "Entrypoint: [database] - import database file: seed.sql"
-            cat $WEBROOT/.files/sql/seed.sql | mysql -h mysql -u"root" -p"$DB_ROOTPASS" $DB_DATABASE
+            cat $WEBROOT/api/.files/sql/seed.sql | mysql -h mysql -u"root" -p"$DB_ROOTPASS" $DB_DATABASE
         fi
     fi
 }
@@ -128,11 +128,12 @@ main() {
     echo >&2 " User: $(whoami)"
     echo >&2 ""
     echo >&2 " Services:"
-    echo >&2 " - App:        http://${HOST:-localhost}:8080"
-    echo >&2 " - Adminer:    http://${HOST:-localhost}:8888 - Manage the database"
-    echo >&2 " - *Ngrok:     http://${HOST:-localhost}:4040 - HTTP/S tunnel and inspection"
-    echo >&2 " - *Mailhog:   http://${HOST:-localhost}:8025 - Email testing"
-    echo >&2 "   *If enabled in ./files/docker/docker-compose.yml"
+    echo >&2 " - App:          http://${HOST:-localhost}:8080"
+    echo >&2 " - Adminer:      http://${HOST:-localhost}:8888 - Manage the database"
+    echo >&2 " - *Ngrok:       http://${HOST:-localhost}:4040 - HTTP/S tunnel and inspection"
+    echo >&2 " - *Mailhog:     http://${HOST:-localhost}:8025 - Email testing"
+    echo >&2 " - *Code Server: http://${HOST:-localhost}:8444 - Visual Studio Code Editor"
+    echo >&2 "   *If enabled in ./.docker/docker-compose.yml"
 }
 
 main
