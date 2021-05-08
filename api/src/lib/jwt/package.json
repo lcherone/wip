@@ -3,7 +3,7 @@
     "version": "0.0.0",
     "private": true,
     "dependencies": {
-      "jsonwebtoken": "^8.3.0"
+      "jsonwebtoken": "^8.5.1"
     },
     "scripts": {
       "postinstall" : "cd ./certs && sh ./generate.certs.sh"
